@@ -1,8 +1,7 @@
-// Emacs style mode select   -*- C++ -*- 
+// Emacs style mode select   -*- C++ -*-
 //-----------------------------------------------------------------------------
 //
-// Copyright(C) 1993-1996 Id Software, Inc.
-// Copyright(C) 2005 Simon Howard
+// Copyright(C) 2012 Simon Howard
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -20,15 +19,22 @@
 // 02111-1307, USA.
 //
 // DESCRIPTION:
-//       Generate a checksum of the WAD directory.
+//     Pseudo-random number generator for secure demos.
 //
+//-----------------------------------------------------------------------------
 
-#ifndef W_CHECKSUM_H
-#define W_CHECKSUM_H
+#ifndef __AES_PRNG_H__
+#define __AES_PRNG_H__
 
 #include "doomtype.h"
 
-extern void W_Checksum(sha1_digest_t digest);
+// Nonce value used as random seed for secure demos.
 
-#endif /* #ifndef W_CHECKSUM_H */
+typedef byte prng_seed_t[16];
+
+void PRNG_Start(prng_seed_t seed);
+void PRNG_Stop(void);
+unsigned int PRNG_Random(void);
+
+#endif /* #ifndef __AES_PRNG_H__ */
 

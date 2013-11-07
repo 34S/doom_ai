@@ -113,6 +113,12 @@ static boolean initialized = false;
 static boolean nomouse = false;
 extern int usemouse;
 
+// Disallow mouse and joystick movement to cause forward/backward
+// motion.  Specified with the '-novert' command line parameter.
+// This is an int to allow saving to config file.
+
+int             novert = 0;
+
 // Bit mask of mouse button state.
 
 static unsigned int mouse_button_state = 0;
@@ -279,7 +285,7 @@ static void UpdateFocus(void)
 // Show or hide the mouse cursor. We have to use different techniques
 // depending on the OS.
 
-static void ShowCursor(boolean show)
+static void SetShowCursor(boolean show)
 {
     // On Windows, using SDL_ShowCursor() adds lag to the mouse input,
     // so work around this by setting an invisible cursor instead. On
@@ -454,7 +460,7 @@ void I_ShutdownGraphics(void)
 {
     if (initialized)
     {
-        ShowCursor(true);
+        SetShowCursor(true);
 
         SDL_QuitSubSystem(SDL_INIT_VIDEO);
 
@@ -703,8 +709,16 @@ static void I_ReadMouse(void)
         ev.type = ev_mouse;
         ev.data1 = mouse_button_state;
         ev.data2 = AccelerateMouse(x);
-        ev.data3 = -AccelerateMouse(y);
-        
+
+        if (!novert)
+        {
+            ev.data3 = -AccelerateMouse(y);
+        }
+        else
+        {
+            ev.data3 = 0;
+        }
+
         D_PostEvent(&ev);
     }
 
@@ -754,15 +768,15 @@ static void UpdateGrab(void)
     {
         // Hide the cursor in screensaver mode
 
-        ShowCursor(false);
+        SetShowCursor(false);
     }
     else if (grab && !currently_grabbed)
     {
-        ShowCursor(false);
+        SetShowCursor(false);
     }
     else if (!grab && currently_grabbed)
     {
-        ShowCursor(true);
+        SetShowCursor(true);
     }
 
     currently_grabbed = grab;
@@ -1133,7 +1147,7 @@ static boolean AutoAdjustFullscreen(void)
     SDL_Rect **modes;
     SDL_Rect *best_mode;
     screen_mode_t *screen_mode;
-    int target_pixels, diff, best_diff;
+    int diff, best_diff;
     int i;
 
     modes = SDL_ListModes(NULL, SDL_FULLSCREEN);
@@ -1150,9 +1164,8 @@ static boolean AutoAdjustFullscreen(void)
 
     best_mode = NULL;
     best_diff = INT_MAX;
-    target_pixels = screen_width * screen_height;
 
-    for (i=0; modes[i] != NULL; ++i) 
+    for (i=0; modes[i] != NULL; ++i)
     {
         //printf("%ix%i?\n", modes[i]->w, modes[i]->h);
 
@@ -1458,12 +1471,30 @@ static void CheckCommandLine(void)
     }
 
     //!
-    // @category video 
+    // @category video
     //
     // Disable the mouse.
     //
 
     nomouse = M_CheckParm("-nomouse") > 0;
+
+    //!
+    // @category video
+    //
+    // Disable vertical mouse movement.
+    //
+
+    if (M_CheckParm("-novert"))
+        novert = true;
+
+    //!
+    // @category video
+    //
+    // Enable vertical mouse movement.
+    //
+
+    if (M_CheckParm("-nonovert"))
+        novert = false;
 
     //!
     // @category video

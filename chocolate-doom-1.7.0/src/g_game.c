@@ -216,11 +216,6 @@ int             joybstraferight = -1;
 int             joybprevweapon = -1;
 int             joybnextweapon = -1;
 
-// fraggle: Disallow mouse and joystick movement to cause forward/backward
-// motion.  Specified with the '-novert' command line parameter.
-// This is an int to allow saving to config file
-
-int             novert = 0;
  
  
  
@@ -716,12 +711,7 @@ void G_BuildTiccmd (ticcmd_t* cmd)
         } 
     }
 
-    // fraggle: allow disabling mouse y movement
- 
-    if (!novert) 
-    {
-        forward += mousey; 
-    }
+    forward += mousey; 
 
     if (strafe) 
 	side += mousex*2; 
@@ -1195,16 +1185,10 @@ void G_Ticker (void)
 // Called by the game initialization functions.
 //
 void G_InitPlayer (int player) 
-{ 
-    player_t*	p; 
- 
-    // set up the saved info         
-    p = &players[player]; 
-	 
-    // clear everything else to defaults 
+{
+    // clear everything else to defaults
     G_PlayerReborn (player); 
-	 
-} 
+}
  
  
 
@@ -1901,8 +1885,8 @@ G_InitNew
 
     // Set the sky to use.
     //
-    // Note: This IS broken, but it is how Vanilla Doom behaves.  
-    // See http://doom.wikia.com/wiki/Sky_never_changes_in_Doom_II.
+    // Note: This IS broken, but it is how Vanilla Doom behaves.
+    // See http://doomwiki.org/wiki/Sky_never_changes_in_Doom_II.
     //
     // Because we set the sky here at the start of a game, not at the
     // start of a level, the sky texture never changes unless we

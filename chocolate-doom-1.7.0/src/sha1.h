@@ -1,8 +1,7 @@
 // Emacs style mode select   -*- C++ -*- 
 //-----------------------------------------------------------------------------
 //
-// Copyright(C) 1993-1996 Id Software, Inc.
-// Copyright(C) 2005 Simon Howard
+// Copyright(C) 2012 Simon Howard
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -20,15 +19,30 @@
 // 02111-1307, USA.
 //
 // DESCRIPTION:
-//       Generate a checksum of the WAD directory.
+//     SHA-1 digest.
 //
+//-----------------------------------------------------------------------------
 
-#ifndef W_CHECKSUM_H
-#define W_CHECKSUM_H
+#ifndef __SHA1_H__
+#define __SHA1_H__
 
 #include "doomtype.h"
 
-extern void W_Checksum(sha1_digest_t digest);
+typedef struct sha1_context_s sha1_context_t;
+typedef byte sha1_digest_t[20];
 
-#endif /* #ifndef W_CHECKSUM_H */
+struct sha1_context_s {
+    uint32_t h0,h1,h2,h3,h4;
+    uint32_t nblocks;
+    byte buf[64];
+    int count;
+};
+
+void SHA1_Init(sha1_context_t *context);
+void SHA1_Update(sha1_context_t *context, byte *buf, size_t len);
+void SHA1_Final(sha1_digest_t digest, sha1_context_t *context);
+void SHA1_UpdateInt32(sha1_context_t *context, unsigned int val);
+void SHA1_UpdateString(sha1_context_t *context, char *str);
+
+#endif /* #ifndef __SHA1_H__ */
 

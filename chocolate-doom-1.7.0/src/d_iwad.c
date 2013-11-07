@@ -157,6 +157,10 @@ static char *steam_install_subdirs[] =
     "steamapps\\common\\doom 2\\base",
     "steamapps\\common\\final doom\\base",
     "steamapps\\common\\ultimate doom\\base",
+
+    // From Doom 3: BFG Edition:
+
+    "steamapps\\common\\DOOM 3 BFG Edition\\base\\wads",
 };
 
 static char *GetRegistryString(registry_value_t *reg_val)
@@ -168,40 +172,34 @@ static char *GetRegistryString(registry_value_t *reg_val)
 
     // Open the key (directory where the value is stored)
 
-    if (RegOpenKeyEx(reg_val->root, reg_val->path, 0, KEY_READ, &key) 
-          != ERROR_SUCCESS)
+    if (RegOpenKeyEx(reg_val->root, reg_val->path,
+                     0, KEY_READ, &key) != ERROR_SUCCESS)
     {
         return NULL;
     }
 
-    // Find the type and length of the string
+    result = NULL;
 
-    if (RegQueryValueEx(key, reg_val->value, NULL, &valtype, NULL, &len) 
-          != ERROR_SUCCESS)
+    // Find the type and length of the string, and only accept strings.
+
+    if (RegQueryValueEx(key, reg_val->value,
+                        NULL, &valtype, NULL, &len) == ERROR_SUCCESS
+     && valtype == REG_SZ)
     {
-        return NULL;
-    }
+        // Allocate a buffer for the value and read the value
 
-    // Only accept strings
+        result = malloc(len);
 
-    if (valtype != REG_SZ)
-    {
-        return NULL;
-    }
-
-    // Allocate a buffer for the value and read the value
-
-    result = malloc(len);
-
-    if (RegQueryValueEx(key, reg_val->value, NULL, &valtype, (unsigned char *) result, &len) 
-          != ERROR_SUCCESS)
-    {
-        free(result);
-        return NULL;
+        if (RegQueryValueEx(key, reg_val->value, NULL, &valtype,
+                            (unsigned char *) result, &len) != ERROR_SUCCESS)
+        {
+            free(result);
+            result = NULL;
+        }
     }
 
     // Close the key
-        
+
     RegCloseKey(key);
 
     return result;
@@ -295,6 +293,8 @@ static void CheckSteamEdition(void)
 
         AddIWADDir(subpath);
     }
+
+    free(install_path);
 }
 
 // Default install directories for DOS Doom

@@ -1,3 +1,0 @@
-pcsound_linux.o: pcsound_linux.c ../config.h
-
-../config.h:
