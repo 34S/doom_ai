@@ -101,8 +101,6 @@ static char *gamemodes[] =
     "Deathmatch 2.0",
 };
 
-static char *wad_extensions[] = { "wad", "lmp", "deh", NULL };
-
 char *net_player_name;
 char *chat_macros[10];
 
@@ -156,7 +154,7 @@ static void AddWADs(execute_context_t *exec)
 {
     int have_wads = 0;
     int i;
- 
+    
     for (i=0; i<NUM_WADS; ++i)
     {
         if (wads[i] != NULL && strlen(wads[i]) > 0)
@@ -265,7 +263,7 @@ static void StartGame(int multiplayer)
     AddWADs(exec);
 
     TXT_Shutdown();
- 
+    
     M_SaveDefaults();
     PassThroughArguments(exec);
 
@@ -570,9 +568,7 @@ static void OpenWadsWindow(TXT_UNCAST_ARG(widget), TXT_UNCAST_ARG(user_data))
 
     for (i=0; i<NUM_WADS; ++i)
     {
-        TXT_AddWidget(window,
-                      TXT_NewFileSelector(&wads[i], 60, "Select a WAD file",
-                                          wad_extensions));
+        TXT_AddWidget(window, TXT_NewInputBox(&wads[i], 60));
     }
 }
 

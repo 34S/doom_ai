@@ -1014,6 +1014,10 @@ void WI_drawDeathmatchStats(void)
     int		x;
     int		y;
     int		w;
+    
+    int		lh;	// line height
+
+    lh = WI_SPACINGY;
 
     WI_slamBackground();
     
