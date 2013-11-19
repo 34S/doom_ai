@@ -122,6 +122,11 @@
 		2D0898CB183811F7002C708C /* libSDL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D0898CA183811F7002C708C /* libSDL.a */; };
 		2D0898CD1838120A002C708C /* libSDL_net.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D0898CC1838120A002C708C /* libSDL_net.a */; };
 		2D0898D01838123E002C708C /* SDLMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D0898CF1838123E002C708C /* SDLMain.m */; };
+		2D3A3426183AB1FE007B924B /* Agent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2D3A3424183AB1FE007B924B /* Agent.cpp */; };
+		2D3A342B183AB22A007B924B /* AgentMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2D3A3427183AB22A007B924B /* AgentMap.cpp */; };
+		2D3A342C183AB22A007B924B /* BSPLeaf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2D3A3429183AB22A007B924B /* BSPLeaf.cpp */; };
+		2D3A3433183AB7CB007B924B /* DoomAILink.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2D3A3431183AB7CA007B924B /* DoomAILink.cpp */; };
+		2DCF7D1F183A7775003469ED /* PathPlanner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DCF7D1D183A7775003469ED /* PathPlanner.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -345,8 +350,18 @@
 		2D0898C8183811D2002C708C /* libSDL_mixer.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL_mixer.a; path = ../../../../../../../usr/local/Cellar/sdl_mixer/1.2.12/lib/libSDL_mixer.a; sourceTree = "<group>"; };
 		2D0898CA183811F7002C708C /* libSDL.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL.a; path = ../../../../../../../usr/local/Cellar/sdl/1.2.15/lib/libSDL.a; sourceTree = "<group>"; };
 		2D0898CC1838120A002C708C /* libSDL_net.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL_net.a; path = ../../../../../../../usr/local/Cellar/sdl_net/1.2.8/lib/libSDL_net.a; sourceTree = "<group>"; };
-		2D0898CE1838123E002C708C /* SDLMain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDLMain.h; path = ../../../../../../../../usr/local/Cellar/sdl/1.2.15/libexec/SDLMain.h; sourceTree = "<group>"; };
-		2D0898CF1838123E002C708C /* SDLMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SDLMain.m; path = ../../../../../../../../usr/local/Cellar/sdl/1.2.15/libexec/SDLMain.m; sourceTree = "<group>"; };
+		2D0898CE1838123E002C708C /* SDLMain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDLMain.h; path = /usr/local/Cellar/sdl/1.2.15/libexec/SDLMain.h; sourceTree = "<absolute>"; };
+		2D0898CF1838123E002C708C /* SDLMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SDLMain.m; path = /usr/local/Cellar/sdl/1.2.15/libexec/SDLMain.m; sourceTree = "<absolute>"; };
+		2D3A3424183AB1FE007B924B /* Agent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Agent.cpp; path = "../../chocolate-doom-1.7.0/src/Agent.cpp"; sourceTree = "<group>"; };
+		2D3A3425183AB1FE007B924B /* Agent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Agent.h; path = "../../chocolate-doom-1.7.0/src/Agent.h"; sourceTree = "<group>"; };
+		2D3A3427183AB22A007B924B /* AgentMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AgentMap.cpp; path = "../../chocolate-doom-1.7.0/src/AgentMap.cpp"; sourceTree = "<group>"; };
+		2D3A3428183AB22A007B924B /* AgentMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AgentMap.h; path = "../../chocolate-doom-1.7.0/src/AgentMap.h"; sourceTree = "<group>"; };
+		2D3A3429183AB22A007B924B /* BSPLeaf.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BSPLeaf.cpp; path = "../../chocolate-doom-1.7.0/src/BSPLeaf.cpp"; sourceTree = "<group>"; };
+		2D3A342A183AB22A007B924B /* BSPLeaf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BSPLeaf.h; path = "../../chocolate-doom-1.7.0/src/BSPLeaf.h"; sourceTree = "<group>"; };
+		2D3A3431183AB7CA007B924B /* DoomAILink.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DoomAILink.cpp; path = "../../chocolate-doom-1.7.0/src/DoomAILink.cpp"; sourceTree = "<group>"; };
+		2D3A3432183AB7CA007B924B /* DoomAILink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DoomAILink.h; path = "../../chocolate-doom-1.7.0/src/DoomAILink.h"; sourceTree = "<group>"; };
+		2DCF7D1D183A7775003469ED /* PathPlanner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PathPlanner.cpp; path = "../../chocolate-doom-1.7.0/src/AI/PathPlanner.cpp"; sourceTree = "<group>"; };
+		2DCF7D1E183A7775003469ED /* PathPlanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PathPlanner.h; path = "../../chocolate-doom-1.7.0/src/AI/PathPlanner.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -400,89 +415,16 @@
 		2D08976218380553002C708C /* doom-ai */ = {
 			isa = PBXGroup;
 			children = (
-				2D0898CE1838123E002C708C /* SDLMain.h */,
-				2D0898CF1838123E002C708C /* SDLMain.m */,
-				2D0898BC18380DB2002C708C /* dummy.c */,
-				2D08986B18380647002C708C /* s_sound.c */,
-				2D08986C18380647002C708C /* s_sound.h */,
-				2D08986D18380647002C708C /* sounds.c */,
-				2D08986E18380647002C708C /* sounds.h */,
-				2D08986F18380647002C708C /* st_lib.c */,
-				2D08987018380647002C708C /* st_lib.h */,
-				2D08987118380647002C708C /* st_stuff.c */,
-				2D08987218380647002C708C /* st_stuff.h */,
-				2D08987318380647002C708C /* tables.c */,
-				2D08987418380647002C708C /* tables.h */,
-				2D08987518380647002C708C /* v_video.c */,
-				2D08987618380647002C708C /* v_video.h */,
-				2D08987718380647002C708C /* w_checksum.c */,
-				2D08987818380647002C708C /* w_checksum.h */,
-				2D08987918380647002C708C /* w_file_posix.c */,
-				2D08987A18380647002C708C /* w_file_stdc.c */,
-				2D08987B18380647002C708C /* w_file_win32.c */,
-				2D08987C18380647002C708C /* w_file.c */,
-				2D08987D18380647002C708C /* w_file.h */,
-				2D08987E18380647002C708C /* w_merge.c */,
-				2D08987F18380647002C708C /* w_merge.h */,
-				2D08988018380647002C708C /* w_wad.c */,
-				2D08988118380647002C708C /* w_wad.h */,
-				2D08988218380647002C708C /* wi_stuff.c */,
-				2D08988318380647002C708C /* wi_stuff.h */,
-				2D08988518380647002C708C /* z_zone.c */,
-				2D08988618380647002C708C /* z_zone.h */,
-				2D08981818380623002C708C /* net_sdl.c */,
-				2D08981918380623002C708C /* net_sdl.h */,
-				2D08981A18380623002C708C /* net_server.c */,
-				2D08981B18380623002C708C /* net_server.h */,
-				2D08981C18380623002C708C /* net_structrw.c */,
-				2D08981D18380623002C708C /* net_structrw.h */,
-				2D08981E18380623002C708C /* p_ceilng.c */,
-				2D08981F18380623002C708C /* p_doors.c */,
-				2D08982018380623002C708C /* p_enemy.c */,
-				2D08982118380623002C708C /* p_floor.c */,
-				2D08982218380623002C708C /* p_inter.c */,
-				2D08982318380623002C708C /* p_inter.h */,
-				2D08982418380623002C708C /* p_lights.c */,
-				2D08982518380623002C708C /* p_local.h */,
-				2D08982618380623002C708C /* p_map.c */,
-				2D08982718380623002C708C /* p_maputl.c */,
-				2D08982818380623002C708C /* p_mobj.c */,
-				2D08982918380623002C708C /* p_mobj.h */,
-				2D08982A18380623002C708C /* p_plats.c */,
-				2D08982B18380623002C708C /* p_pspr.c */,
-				2D08982C18380623002C708C /* p_pspr.h */,
-				2D08982D18380623002C708C /* p_saveg.c */,
-				2D08982E18380623002C708C /* p_saveg.h */,
-				2D08982F18380623002C708C /* p_setup.c */,
-				2D08983018380623002C708C /* p_setup.h */,
-				2D08983118380623002C708C /* p_sight.c */,
-				2D08983218380623002C708C /* p_spec.c */,
-				2D08983318380623002C708C /* p_spec.h */,
-				2D08983418380623002C708C /* p_switch.c */,
-				2D08983518380623002C708C /* p_telept.c */,
-				2D08983618380623002C708C /* p_tick.c */,
-				2D08983718380623002C708C /* p_tick.h */,
-				2D08983818380623002C708C /* p_user.c */,
-				2D08983918380623002C708C /* r_bsp.c */,
-				2D08983A18380623002C708C /* r_bsp.h */,
-				2D08983B18380623002C708C /* r_data.c */,
-				2D08983C18380623002C708C /* r_data.h */,
-				2D08983D18380623002C708C /* r_defs.h */,
-				2D08983E18380623002C708C /* r_draw.c */,
-				2D08983F18380623002C708C /* r_draw.h */,
-				2D08984018380623002C708C /* r_local.h */,
-				2D08984118380623002C708C /* r_main.c */,
-				2D08984218380623002C708C /* r_main.h */,
-				2D08984318380623002C708C /* r_plane.c */,
-				2D08984418380623002C708C /* r_plane.h */,
-				2D08984518380623002C708C /* r_segs.c */,
-				2D08984618380623002C708C /* r_segs.h */,
-				2D08984718380623002C708C /* r_sky.c */,
-				2D08984818380623002C708C /* r_sky.h */,
-				2D08984918380623002C708C /* r_state.h */,
-				2D08984A18380623002C708C /* r_things.c */,
-				2D08984B18380623002C708C /* r_things.h */,
-				2D08984C18380623002C708C /* resource.rc */,
+				2D6D2707183A69F2003D3E4B /* Pathfinder */,
+				2D0898D118381C44002C708C /* Doom Engine */,
+				2D08976518380553002C708C /* doom_ai.1 */,
+			);
+			path = "doom-ai";
+			sourceTree = "<group>";
+		};
+		2D0898D118381C44002C708C /* Doom Engine */ = {
+			isa = PBXGroup;
+			children = (
 				2D08976C183805DE002C708C /* am_map.c */,
 				2D08976D183805DE002C708C /* am_map.h */,
 				2D08976F183805DE002C708C /* d_englsh.h */,
@@ -526,6 +468,7 @@
 				2D089795183805DF002C708C /* doomtype.h */,
 				2D089796183805DF002C708C /* dstrings.c */,
 				2D089797183805DF002C708C /* dstrings.h */,
+				2D0898BC18380DB2002C708C /* dummy.c */,
 				2D089798183805DF002C708C /* f_finale.c */,
 				2D089799183805DF002C708C /* f_finale.h */,
 				2D08979A183805DF002C708C /* f_wipe.c */,
@@ -596,9 +539,107 @@
 				2D0897DB183805DF002C708C /* net_packet.h */,
 				2D0897DC183805DF002C708C /* net_query.c */,
 				2D0897DD183805DF002C708C /* net_query.h */,
-				2D08976518380553002C708C /* doom_ai.1 */,
+				2D08981818380623002C708C /* net_sdl.c */,
+				2D08981918380623002C708C /* net_sdl.h */,
+				2D08981A18380623002C708C /* net_server.c */,
+				2D08981B18380623002C708C /* net_server.h */,
+				2D08981C18380623002C708C /* net_structrw.c */,
+				2D08981D18380623002C708C /* net_structrw.h */,
+				2D08981E18380623002C708C /* p_ceilng.c */,
+				2D08981F18380623002C708C /* p_doors.c */,
+				2D08982018380623002C708C /* p_enemy.c */,
+				2D08982118380623002C708C /* p_floor.c */,
+				2D08982218380623002C708C /* p_inter.c */,
+				2D08982318380623002C708C /* p_inter.h */,
+				2D08982418380623002C708C /* p_lights.c */,
+				2D08982518380623002C708C /* p_local.h */,
+				2D08982618380623002C708C /* p_map.c */,
+				2D08982718380623002C708C /* p_maputl.c */,
+				2D08982818380623002C708C /* p_mobj.c */,
+				2D08982918380623002C708C /* p_mobj.h */,
+				2D08982A18380623002C708C /* p_plats.c */,
+				2D08982B18380623002C708C /* p_pspr.c */,
+				2D08982C18380623002C708C /* p_pspr.h */,
+				2D08982D18380623002C708C /* p_saveg.c */,
+				2D08982E18380623002C708C /* p_saveg.h */,
+				2D08982F18380623002C708C /* p_setup.c */,
+				2D08983018380623002C708C /* p_setup.h */,
+				2D08983118380623002C708C /* p_sight.c */,
+				2D08983218380623002C708C /* p_spec.c */,
+				2D08983318380623002C708C /* p_spec.h */,
+				2D08983418380623002C708C /* p_switch.c */,
+				2D08983518380623002C708C /* p_telept.c */,
+				2D08983618380623002C708C /* p_tick.c */,
+				2D08983718380623002C708C /* p_tick.h */,
+				2D08983818380623002C708C /* p_user.c */,
+				2D08983918380623002C708C /* r_bsp.c */,
+				2D08983A18380623002C708C /* r_bsp.h */,
+				2D08983B18380623002C708C /* r_data.c */,
+				2D08983C18380623002C708C /* r_data.h */,
+				2D08983D18380623002C708C /* r_defs.h */,
+				2D08983E18380623002C708C /* r_draw.c */,
+				2D08983F18380623002C708C /* r_draw.h */,
+				2D08984018380623002C708C /* r_local.h */,
+				2D08984118380623002C708C /* r_main.c */,
+				2D08984218380623002C708C /* r_main.h */,
+				2D08984318380623002C708C /* r_plane.c */,
+				2D08984418380623002C708C /* r_plane.h */,
+				2D08984518380623002C708C /* r_segs.c */,
+				2D08984618380623002C708C /* r_segs.h */,
+				2D08984718380623002C708C /* r_sky.c */,
+				2D08984818380623002C708C /* r_sky.h */,
+				2D08984918380623002C708C /* r_state.h */,
+				2D08984A18380623002C708C /* r_things.c */,
+				2D08984B18380623002C708C /* r_things.h */,
+				2D08984C18380623002C708C /* resource.rc */,
+				2D08986B18380647002C708C /* s_sound.c */,
+				2D08986C18380647002C708C /* s_sound.h */,
+				2D0898CE1838123E002C708C /* SDLMain.h */,
+				2D0898CF1838123E002C708C /* SDLMain.m */,
+				2D08986D18380647002C708C /* sounds.c */,
+				2D08986E18380647002C708C /* sounds.h */,
+				2D08986F18380647002C708C /* st_lib.c */,
+				2D08987018380647002C708C /* st_lib.h */,
+				2D08987118380647002C708C /* st_stuff.c */,
+				2D08987218380647002C708C /* st_stuff.h */,
+				2D08987318380647002C708C /* tables.c */,
+				2D08987418380647002C708C /* tables.h */,
+				2D08987518380647002C708C /* v_video.c */,
+				2D08987618380647002C708C /* v_video.h */,
+				2D08987718380647002C708C /* w_checksum.c */,
+				2D08987818380647002C708C /* w_checksum.h */,
+				2D08987C18380647002C708C /* w_file.c */,
+				2D08987D18380647002C708C /* w_file.h */,
+				2D08987918380647002C708C /* w_file_posix.c */,
+				2D08987A18380647002C708C /* w_file_stdc.c */,
+				2D08987B18380647002C708C /* w_file_win32.c */,
+				2D08987E18380647002C708C /* w_merge.c */,
+				2D08987F18380647002C708C /* w_merge.h */,
+				2D08988018380647002C708C /* w_wad.c */,
+				2D08988118380647002C708C /* w_wad.h */,
+				2D08988218380647002C708C /* wi_stuff.c */,
+				2D08988318380647002C708C /* wi_stuff.h */,
+				2D08988518380647002C708C /* z_zone.c */,
+				2D08988618380647002C708C /* z_zone.h */,
 			);
-			path = "doom-ai";
+			name = "Doom Engine";
+			sourceTree = "<group>";
+		};
+		2D6D2707183A69F2003D3E4B /* Pathfinder */ = {
+			isa = PBXGroup;
+			children = (
+				2D3A3424183AB1FE007B924B /* Agent.cpp */,
+				2D3A3425183AB1FE007B924B /* Agent.h */,
+				2D3A3427183AB22A007B924B /* AgentMap.cpp */,
+				2D3A3428183AB22A007B924B /* AgentMap.h */,
+				2D3A3429183AB22A007B924B /* BSPLeaf.cpp */,
+				2D3A342A183AB22A007B924B /* BSPLeaf.h */,
+				2DCF7D1D183A7775003469ED /* PathPlanner.cpp */,
+				2DCF7D1E183A7775003469ED /* PathPlanner.h */,
+				2D3A3431183AB7CA007B924B /* DoomAILink.cpp */,
+				2D3A3432183AB7CA007B924B /* DoomAILink.h */,
+			);
+			name = Pathfinder;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -661,15 +702,19 @@
 				2D089808183805DF002C708C /* m_fixed.c in Sources */,
 				2D08985918380623002C708C /* p_plats.c in Sources */,
 				2D0897E3183805DF002C708C /* d_net.c in Sources */,
+				2D3A3426183AB1FE007B924B /* Agent.cpp in Sources */,
 				2D08985718380623002C708C /* p_maputl.c in Sources */,
 				2D08980B183805DF002C708C /* m_random.c in Sources */,
 				2D08985118380623002C708C /* p_doors.c in Sources */,
 				2D0897E5183805DF002C708C /* deh_cheat.c in Sources */,
+				2D3A3433183AB7CB007B924B /* DoomAILink.cpp in Sources */,
 				2D08985218380623002C708C /* p_enemy.c in Sources */,
 				2D08988918380647002C708C /* st_lib.c in Sources */,
 				2D0897F3183805DF002C708C /* f_finale.c in Sources */,
+				2D3A342C183AB22A007B924B /* BSPLeaf.cpp in Sources */,
 				2D0897EC183805DF002C708C /* deh_sound.c in Sources */,
 				2D0897FB183805DF002C708C /* i_pcsound.c in Sources */,
+				2DCF7D1F183A7775003469ED /* PathPlanner.cpp in Sources */,
 				2D0897EB183805DF002C708C /* deh_ptr.c in Sources */,
 				2D089804183805DF002C708C /* m_argv.c in Sources */,
 				2D08980F183805DF002C708C /* mus2mid.c in Sources */,
@@ -723,6 +768,7 @@
 				2D089800183805DF002C708C /* i_timer.c in Sources */,
 				2D0897F9183805DF002C708C /* i_main.c in Sources */,
 				2D089810183805DF002C708C /* net_client.c in Sources */,
+				2D3A342B183AB22A007B924B /* AgentMap.cpp in Sources */,
 				2D0897E1183805DF002C708C /* d_iwad.c in Sources */,
 				2D08985418380623002C708C /* p_inter.c in Sources */,
 				2D089814183805DF002C708C /* net_io.c in Sources */,
@@ -835,6 +881,7 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = NO;
 				FRAMEWORK_SEARCH_PATHS = /System/Library/Frameworks;
+				GCC_INPUT_FILETYPE = automatic;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -868,6 +915,7 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = NO;
 				FRAMEWORK_SEARCH_PATHS = /System/Library/Frameworks;
+				GCC_INPUT_FILETYPE = automatic;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -915,6 +963,7 @@
 				2D08976B18380553002C708C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
