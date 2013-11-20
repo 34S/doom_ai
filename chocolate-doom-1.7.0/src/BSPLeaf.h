@@ -13,6 +13,7 @@
 #include <vector>
 
 // DOOM headers
+#include "p_local.h"
 #include "r_defs.h"
 
 /** TODO: class description. */
@@ -24,21 +25,18 @@ public:
     BSPLeaf();
     
 	/** Constructor. */
-    BSPLeaf(node_t* nodes, int bspNum);
+    BSPLeaf(int bspNum);
 	
     /** Destructor. */
     ~BSPLeaf();
 	
-	/** Adds a line segment to this convex polygon. */
-	void addLineSegment(maplinedef_t line) { _borderSegments.push_back(line); }
-	
 	/** Accessor for the border segments containing portals to other convex polys. */
-	std::vector<maplinedef_t> portals();
+	inline const std::vector<seg_t>& portals() { return _portals; }
 	
 public:
 	
 	/** iVars.*/
-	std::vector<maplinedef_t> _borderSegments;
+	std::vector<seg_t>		_portals;
 };
 
 #endif  // End of __BSP_LEAF_H__
