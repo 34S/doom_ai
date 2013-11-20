@@ -63,7 +63,7 @@ m_config.c           m_config.h            \
 m_fixed.c            m_fixed.h             \
 m_menu.c             m_menu.h              \
 m_misc.c             m_misc.h              \
-sha1.c               sha1.h                \
+md5.c                md5.h                 \
 memio.c              memio.h               \
 m_random.c           m_random.h            \
 p_ceilng.c                                 \
@@ -132,7 +132,6 @@ deh_weapon.c
 # source files needed for FEATURE_MULTIPLAYER
 
 FEATURE_MULTIPLAYER_SOURCE_FILES=          \
-aes_prng.c           aes_prng.h            \
 net_client.c         net_client.h          \
 net_common.c         net_common.h          \
 net_dedicated.c      net_dedicated.h       \

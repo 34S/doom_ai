@@ -50,7 +50,6 @@ typedef struct
 // Fonts:
 
 #include "txt_font.h"
-#include "txt_largefont.h"
 #include "txt_smallfont.h"
 
 // Time between character blinks in ms
@@ -122,34 +121,6 @@ static SDL_Color ega_colors[] =
 
 #endif
 
-#ifdef _WIN32
-
-#define WIN32_LEAN_AND_MEAN
-#include <windows.h>
-
-// Examine system DPI settings to determine whether to use the large font.
-
-static int Win32_UseLargeFont(void)
-{
-    HDC hdc = GetDC(NULL);
-    int dpix;
-
-    if (!hdc)
-    {
-        return 0;
-    }
-
-    dpix = GetDeviceCaps(hdc, LOGPIXELSX);
-    ReleaseDC(NULL, hdc);
-
-    // 144 is the DPI when using "150%" scaling. If the user has this set
-    // then consider this an appropriate threshold for using the large font.
-
-    return dpix >= 144;
-}
-
-#endif
-
 static txt_font_t *FontForName(char *name)
 {
     if (!strcmp(name, "small"))
@@ -159,10 +130,6 @@ static txt_font_t *FontForName(char *name)
     else if (!strcmp(name, "normal"))
     {
         return &main_font;
-    }
-    else if (!strcmp(name, "large"))
-    {
-        return &large_font;
     }
     else
     {
@@ -179,8 +146,9 @@ static txt_font_t *FontForName(char *name)
 
 static void ChooseFont(void)
 {
-    const SDL_VideoInfo *info;
+    SDL_Rect **modes;
     char *env;
+    int i;
 
     // Allow normal selection to be overridden from an environment variable:
 
@@ -196,50 +164,34 @@ static void ChooseFont(void)
         }
     }
 
-    // Get desktop resolution:
+    // Check all modes
 
-    info = SDL_GetVideoInfo();
+    modes = SDL_ListModes(NULL, SDL_FULLSCREEN);
 
     // If in doubt and we can't get a list, always prefer to
     // fall back to the normal font:
 
-    if (info == NULL)
+    font = &main_font;
+
+    if (modes == NULL || modes == (SDL_Rect **) -1 || *modes == NULL)
     {
 #ifdef _WIN32_WCE
         font = &small_font;
-#else
-        font = &main_font;
 #endif
         return;
     }
 
-    // On tiny low-res screens (eg. palmtops) use the small font.
-    // If the screen resolution is at least 1920x1080, this is
-    // a modern high-resolution display, and we can use the
-    // large font.
+    for (i=0; modes[i] != NULL; ++i)
+    {
+        if (modes[i]->w >= 640 && modes[i]->h >= 480)
+        {
+            return;
+        }
+    }
 
-    if (info->current_w < 640 || info->current_h < 480)
-    {
-        font = &small_font;
-    }
-#ifdef _WIN32
-    // On Windows we can use the system DPI settings to make a
-    // more educated guess about whether to use the large font.
+    // No large mode found.
 
-    else if (Win32_UseLargeFont())
-    {
-        font = &large_font;
-    }
-#else
-    else if (info->current_w >= 1920 && info->current_h >= 1080)
-    {
-        font = &large_font;
-    }
-#endif
-    else
-    {
-        font = &main_font;
-    }
+    font = &small_font;
 }
 
 //
@@ -297,7 +249,6 @@ static inline void UpdateCharacter(int x, int y)
     unsigned char character;
     unsigned char *p;
     unsigned char *s, *s1;
-    unsigned int bit, bytes;
     int bg, fg;
     unsigned int x1, y1;
 
@@ -319,22 +270,18 @@ static inline void UpdateCharacter(int x, int y)
         }
     }
 
-    // How many bytes per line?
-    bytes = (font->w + 7) / 8;
-    p = &font->data[character * font->h * bytes];
+    p = &font->data[character * font->h];
 
-    s = ((unsigned char *) screen->pixels)
-      + (y * font->h * screen->pitch)
-      + (x * font->w);
+    s = ((unsigned char *) screen->pixels) 
+          + (y * font->h * screen->pitch) + (x * font->w);
 
     for (y1=0; y1<font->h; ++y1)
     {
         s1 = s;
-        bit = 0;
 
         for (x1=0; x1<font->w; ++x1)
         {
-            if (*p & (1 << (7-bit)))
+            if (*p & (1 << (7-x1)))
             {
                 *s1++ = fg;
             }
@@ -342,20 +289,9 @@ static inline void UpdateCharacter(int x, int y)
             {
                 *s1++ = bg;
             }
-
-            ++bit;
-            if (bit == 8)
-            {
-                ++p;
-                bit = 0;
-            }
         }
 
-        if (bit != 0)
-        {
-            ++p;
-        }
-
+        ++p;
         s += screen->pitch;
     }
 }

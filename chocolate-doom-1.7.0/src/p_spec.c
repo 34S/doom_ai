@@ -1383,6 +1383,11 @@ void P_SpawnSpecials (void)
 {
     sector_t*	sector;
     int		i;
+    int		episode;
+
+    episode = 1;
+    if (W_CheckNumForName(DEH_String("texture2")) >= 0)
+	episode = 2;
 
     // See if -TIMER was specified.
 
@@ -1469,11 +1474,6 @@ void P_SpawnSpecials (void)
 	switch(lines[i].special)
 	{
 	  case 48:
-            if (numlinespecials >= MAXLINEANIMS)
-            {
-                I_Error("Too many scrolling wall linedefs! "
-                        "(Vanilla limit is 64)");
-            }
 	    // EFFECT FIRSTCOL SCROLL+
 	    linespeciallist[numlinespecials] = &lines[i];
 	    numlinespecials++;
