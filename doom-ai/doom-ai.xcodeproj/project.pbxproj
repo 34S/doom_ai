@@ -138,7 +138,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		2D08976018380553002C708C /* doom-ai */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "doom-ai"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D08976018380553002C708C /* Doom */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Doom; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D08976518380553002C708C /* doom_ai.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = doom_ai.1; sourceTree = "<group>"; };
 		2D08976C183805DE002C708C /* am_map.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = am_map.c; path = "../chocolate-doom-1.7.0/src/am_map.c"; sourceTree = "<group>"; };
 		2D08976D183805DE002C708C /* am_map.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = am_map.h; path = "../chocolate-doom-1.7.0/src/am_map.h"; sourceTree = "<group>"; };
@@ -382,7 +382,7 @@
 		2D08976118380553002C708C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				2D08976018380553002C708C /* doom-ai */,
+				2D08976018380553002C708C /* Doom */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -621,9 +621,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		2D08975F18380553002C708C /* Doom */ = {
+		2D08975F18380553002C708C /* doom-ai */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2D08976918380553002C708C /* Build configuration list for PBXNativeTarget "Doom" */;
+			buildConfigurationList = 2D08976918380553002C708C /* Build configuration list for PBXNativeTarget "doom-ai" */;
 			buildPhases = (
 				2D08975C18380553002C708C /* Sources */,
 				2D08975D18380553002C708C /* Frameworks */,
@@ -633,9 +633,9 @@
 			);
 			dependencies = (
 			);
-			name = Doom;
+			name = "doom-ai";
 			productName = "doom-ai";
-			productReference = 2D08976018380553002C708C /* doom-ai */;
+			productReference = 2D08976018380553002C708C /* Doom */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -659,7 +659,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				2D08975F18380553002C708C /* Doom */,
+				2D08975F18380553002C708C /* doom-ai */,
 			);
 		};
 /* End PBXProject section */
@@ -927,7 +927,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2D08976918380553002C708C /* Build configuration list for PBXNativeTarget "Doom" */ = {
+		2D08976918380553002C708C /* Build configuration list for PBXNativeTarget "doom-ai" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2D08976A18380553002C708C /* Debug */,
