@@ -13,8 +13,8 @@
 
 #ifdef __cplusplus
 
-extern "C" bool createAgent(node_t* nodes);
-//extern "C" void pollAgentPath(node_t* nodes);
+extern "C" bool createAgent(player_t* agent, node_t* nodes);
+extern "C" void updateAgent();
 #endif
 
 #endif

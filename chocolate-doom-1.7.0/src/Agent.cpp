@@ -23,9 +23,10 @@ Agent::Agent()
 //    std::cout << "***************** ---------------something funny" << std::endl;	
 }
 
-Agent::Agent(node_t* nodes)
+Agent::Agent(player_t* inGameAgent, node_t* bspNodes)
 {
-	setupAgent(nodes);
+	_inGameAgent = inGameAgent;
+	setupAgent(bspNodes);
 }
 
 Agent::~Agent()
@@ -36,4 +37,12 @@ Agent::~Agent()
 void Agent::setupAgent(node_t *nodes)
 {
 	_agentMap = std::shared_ptr<AgentMap>(new AgentMap(nodes));
+}
+
+void Agent::update()
+{
+	std::cout << "Updating the path for the agent" << std::endl;
+	
+	_agentMap->chooseMove(_inGameAgent);
+	
 }

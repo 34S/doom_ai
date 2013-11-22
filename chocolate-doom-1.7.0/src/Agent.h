@@ -14,6 +14,7 @@
 
 // DOOM headers
 #include "r_defs.h"
+#include "d_player.h"
 
 // Local headers
 #include "AgentMap.h"
@@ -28,12 +29,13 @@ public:
 	Agent();
 	
 	/** Constructor. */
-    Agent(node_t* nodes);
+    Agent(player_t* inGameAgent, node_t* bspNodes);
     
     /** Destructor. */
     ~Agent();
 	
-	/** Finds the leaf nodes given the root and builds . */
+	/** Updates knowledge with new scene information. */
+	void update();
 	
 	/** Sets up the agent given the current scene. */
 	void setupAgent(node_t* nodes);
@@ -41,6 +43,7 @@ public:
 
 protected:
 	
+	player_t*						_inGameAgent;
 	std::shared_ptr<AgentMap>		_agentMap;
 };
 

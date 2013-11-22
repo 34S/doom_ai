@@ -13,6 +13,7 @@
 #include <vector>
 
 // DOOM headers
+#include "d_player.h"
 #include "r_defs.h"
 
 // Forward declarations
@@ -32,6 +33,9 @@ public:
     
     /** Destructor. */
     ~AgentMap();
+	
+	/** Selects the next move for the agent. */
+	void chooseMove(player_t* inGamePlayer);
 	
 	/** Parses the entire node tree looking for leaves. */
 	void findLeaves(node_t* nodes, const int& bspNum, std::vector<BSPLeaf>& leaves) const;

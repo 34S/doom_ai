@@ -17,10 +17,15 @@
 #pragma mark Initialization
 #endif
 
-static Agent* agent;
+static Agent* intelligent_agent;
 
-bool createAgent(node_t* nodes)
+bool createAgent(player_t* agent, node_t* nodes)
 {
-	Agent* agent = new Agent(nodes);
+	intelligent_agent = new Agent(agent, nodes);
 	return true;
+}
+
+void updateAgent()
+{
+	intelligent_agent->update();
 }
