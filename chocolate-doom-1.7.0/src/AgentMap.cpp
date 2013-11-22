@@ -20,6 +20,7 @@
 #endif
 
 extern int numnodes;
+extern "C" void P_SpawnMapThing (mapthing_t* mthing);
 
 AgentMap::AgentMap()
 {
@@ -44,17 +45,21 @@ void AgentMap::_buildMap(node_t* nodes)
 	_bspLeaves = leaves;
 
 	// Match portals to create structure to travel through
-	for (std::vector<BSPLeaf>::iterator it; it!=_bspLeaves.end(); ++it) {
-		std::vector<seg_t> portal_single = (*it).portals();
-		for (std::vector<BSPLeaf>::iterator innerIt; innerIt!=_bspLeaves.end(); ++innerIt) {
-			std::vector<seg_t> portal_match = (*innerIt).portals();
-//			for (std::vector<seg>::iterator innerIt; innerIt!=_bspLeaves.end(); ++innerIt
+//	for (std::vector<BSPLeaf>::iterator it; it!=_bspLeaves.end(); ++it) {
+//		std::vector<seg_t> portal_single = (*it).portals();
+		
+		// First iterate through all leaves
+//		for (std::vector<BSPLeaf>::iterator innerIt; innerIt!=_bspLeaves.end(); ++innerIt) {
+			
+			// For each leaf, go through and try to match the portals
+//			std::vector<seg_t> portal_match = (*innerIt).portals();
+//			for (std::vector<seg_t>::iterator innerIt; innerIt!=_bspLeaves.end(); ++innerIt
 //				<#statements#>
 //			}
 //				continue;
 //			if ((*it)->li
-		}
-	}
+//		}
+//	}
 }
 
 void AgentMap::findLeaves(node_t* nodes, const int& bspNum, std::vector<BSPLeaf>& leaves) const
@@ -69,7 +74,21 @@ void AgentMap::findLeaves(node_t* nodes, const int& bspNum, std::vector<BSPLeaf>
 		std::cout << "Found leaf: " << leaf_count << std::endl;
 		++leaf_count;
 		
-		leaves.push_back(BSPLeaf(bspNum));
+		BSPLeaf leaf(bspNum);
+		leaves.push_back(leaf);
+		
+		/****************** only for debugging ********************************/
+		// drop in an object to the scene so that we can do some visuals of where we
+		// think the portals are located
+		mapthing_t thing;
+		thing.angle = 90;
+		thing.type = MT_UNDEAD;
+		thing.options = 7;
+		for (unsigned int i=0; i<leaf.portals().size(); ++i) {
+			thing.x = leaf.portals()[i].v1->x >> FRACBITS;
+			thing.y = leaf.portals()[i].v1->y >> FRACBITS;
+			P_SpawnMapThing(&thing);
+		}
 		
 		return;
 	}
