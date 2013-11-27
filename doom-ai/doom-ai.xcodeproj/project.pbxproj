@@ -124,7 +124,7 @@
 		2D0898D01838123E002C708C /* SDLMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D0898CF1838123E002C708C /* SDLMain.m */; };
 		2D3A3426183AB1FE007B924B /* Agent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2D3A3424183AB1FE007B924B /* Agent.cpp */; };
 		2D3A342B183AB22A007B924B /* AgentMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2D3A3427183AB22A007B924B /* AgentMap.cpp */; };
-		2D3A342C183AB22A007B924B /* BSPLeaf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2D3A3429183AB22A007B924B /* BSPLeaf.cpp */; };
+		2D3A342C183AB22A007B924B /* Sector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2D3A3429183AB22A007B924B /* Sector.cpp */; };
 		2D3A3433183AB7CB007B924B /* DoomAILink.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2D3A3431183AB7CA007B924B /* DoomAILink.cpp */; };
 		2DCF7D1F183A7775003469ED /* PathPlanner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DCF7D1D183A7775003469ED /* PathPlanner.cpp */; };
 /* End PBXBuildFile section */
@@ -356,8 +356,8 @@
 		2D3A3425183AB1FE007B924B /* Agent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Agent.h; path = "../../chocolate-doom-1.7.0/src/Agent.h"; sourceTree = "<group>"; };
 		2D3A3427183AB22A007B924B /* AgentMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AgentMap.cpp; path = "../../chocolate-doom-1.7.0/src/AgentMap.cpp"; sourceTree = "<group>"; };
 		2D3A3428183AB22A007B924B /* AgentMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AgentMap.h; path = "../../chocolate-doom-1.7.0/src/AgentMap.h"; sourceTree = "<group>"; };
-		2D3A3429183AB22A007B924B /* BSPLeaf.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BSPLeaf.cpp; path = "../../chocolate-doom-1.7.0/src/BSPLeaf.cpp"; sourceTree = "<group>"; };
-		2D3A342A183AB22A007B924B /* BSPLeaf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BSPLeaf.h; path = "../../chocolate-doom-1.7.0/src/BSPLeaf.h"; sourceTree = "<group>"; };
+		2D3A3429183AB22A007B924B /* Sector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Sector.cpp; path = "../../chocolate-doom-1.7.0/src/Sector.cpp"; sourceTree = "<group>"; };
+		2D3A342A183AB22A007B924B /* Sector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Sector.h; path = "../../chocolate-doom-1.7.0/src/Sector.h"; sourceTree = "<group>"; };
 		2D3A3431183AB7CA007B924B /* DoomAILink.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DoomAILink.cpp; path = "../../chocolate-doom-1.7.0/src/DoomAILink.cpp"; sourceTree = "<group>"; };
 		2D3A3432183AB7CA007B924B /* DoomAILink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DoomAILink.h; path = "../../chocolate-doom-1.7.0/src/DoomAILink.h"; sourceTree = "<group>"; };
 		2DCF7D1D183A7775003469ED /* PathPlanner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PathPlanner.cpp; path = "../../chocolate-doom-1.7.0/src/AI/PathPlanner.cpp"; sourceTree = "<group>"; };
@@ -632,8 +632,8 @@
 				2D3A3425183AB1FE007B924B /* Agent.h */,
 				2D3A3427183AB22A007B924B /* AgentMap.cpp */,
 				2D3A3428183AB22A007B924B /* AgentMap.h */,
-				2D3A3429183AB22A007B924B /* BSPLeaf.cpp */,
-				2D3A342A183AB22A007B924B /* BSPLeaf.h */,
+				2D3A3429183AB22A007B924B /* Sector.cpp */,
+				2D3A342A183AB22A007B924B /* Sector.h */,
 				2DCF7D1D183A7775003469ED /* PathPlanner.cpp */,
 				2DCF7D1E183A7775003469ED /* PathPlanner.h */,
 				2D3A3431183AB7CA007B924B /* DoomAILink.cpp */,
@@ -711,7 +711,7 @@
 				2D08985218380623002C708C /* p_enemy.c in Sources */,
 				2D08988918380647002C708C /* st_lib.c in Sources */,
 				2D0897F3183805DF002C708C /* f_finale.c in Sources */,
-				2D3A342C183AB22A007B924B /* BSPLeaf.cpp in Sources */,
+				2D3A342C183AB22A007B924B /* Sector.cpp in Sources */,
 				2D0897EC183805DF002C708C /* deh_sound.c in Sources */,
 				2D0897FB183805DF002C708C /* i_pcsound.c in Sources */,
 				2DCF7D1F183A7775003469ED /* PathPlanner.cpp in Sources */,

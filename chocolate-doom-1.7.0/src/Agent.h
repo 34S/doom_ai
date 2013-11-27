@@ -19,6 +19,9 @@
 // Local headers
 #include "AgentMap.h"
 
+// Forward declaration
+class BSPLeaf;
+struct Portal;
 
 /** TODO: class description. */
 class Agent
@@ -34,17 +37,25 @@ public:
     /** Destructor. */
     ~Agent();
 	
+	/** Selects the next move for the agent. */
+	void chooseMove();
+	
+	/** Search methods returning next position to move toward. */
+	Sector* depthFirstSearch(Sector* leaf, Portal* parent);
+	
 	/** Updates knowledge with new scene information. */
 	void update();
 	
 	/** Sets up the agent given the current scene. */
-	void setupAgent(node_t* nodes);
+	void setupAgent();
 
 
 protected:
 	
 	player_t*						_inGameAgent;
 	std::shared_ptr<AgentMap>		_agentMap;
+	
+	int								_nodeCount;
 };
 
 #endif  // End of __Agent__

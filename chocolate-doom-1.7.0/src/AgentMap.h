@@ -10,6 +10,7 @@
 #define __AGENT_MAP_H__
 
 // System headers
+#include <map>
 #include <vector>
 
 // DOOM headers
@@ -17,7 +18,7 @@
 #include "r_defs.h"
 
 // Forward declarations
-class BSPLeaf;
+class Sector;
 
 
 /** TODO: class description. */
@@ -27,26 +28,28 @@ public:
     
 	/** Default constructor. */
 	AgentMap();
-	
-    /** Constructor. */
-    AgentMap(node_t* nodes);
-    
+
     /** Destructor. */
     ~AgentMap();
 	
-	/** Selects the next move for the agent. */
-	void chooseMove(player_t* inGamePlayer);
+	/** Clears all search markers. */
+	void clearSearch();
 	
-	/** Parses the entire node tree looking for leaves. */
-	void findLeaves(node_t* nodes, const int& bspNum, std::vector<BSPLeaf>& leaves) const;
+	/** Accessor for the sectors. */
+	std::map<sector_t*, Sector>& sectors() { return _sectors; }
+	
+	/** Accessor for the endgame sector. */
+	sector_t* endLevelSector() { return _endLevelSector; }
+	
 	
 protected:
 	
 	/** Handles high-level map building procedure. */
-	void _buildMap(node_t* nodes);
+	void _buildMap();
 	
 	/** iVars. */
-	std::vector<BSPLeaf>	_bspLeaves;
+	std::map<sector_t*, Sector>		_sectors;
+	sector_t*						_endLevelSector;
 };
 
 #endif  // End of __AGENT_MAP_H__

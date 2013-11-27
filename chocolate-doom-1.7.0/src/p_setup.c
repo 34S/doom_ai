@@ -51,7 +51,8 @@
 #include "DoomAILink.h"
 
 void createAgent(player_t* player, node_t* nodes);
-void	P_SpawnMapThing (mapthing_t*	mthing);
+void updateAgent();
+void P_SpawnMapThing (mapthing_t*	mthing);
 
 
 //
@@ -819,9 +820,6 @@ P_SetupLevel
     bodyqueslot = 0;
     deathmatch_p = deathmatchstarts;
     P_LoadThings (lumpnum+ML_THINGS);
-	
-	// Create our link into the run loop for c++
-	createAgent(&players[0], nodes);
     
     // if deathmatch, randomly spawn the active players
     if (deathmatch)
@@ -849,7 +847,10 @@ P_SetupLevel
 	R_PrecacheLevel ();
 
     //printf ("free memory: 0x%x\n", Z_FreeMemory());
-
+	
+	// Create our link into the run loop for c++
+	createAgent(&players[0], nodes);
+	updateAgent();
 }
 
 
