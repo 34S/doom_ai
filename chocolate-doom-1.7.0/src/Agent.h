@@ -41,13 +41,25 @@ public:
 	void chooseMove();
 	
 	/** Search methods returning next position to move toward. */
-	Sector* depthFirstSearch(Sector* leaf, Portal* parent);
+	Sector* depthFirstSearch(Sector* leaf, std::shared_ptr<Portal> parent);
 	
-	/** Updates knowledge with new scene information. */
-	void update();
+	/** Utility for calculating the square of the distance. */
+	float distanceMagnitude(float agentX, float agentY, float targetX, float targetY);
 	
 	/** Sets up the agent given the current scene. */
 	void setupAgent();
+	
+	/** Sums all attractive forces for the agent. */
+	void sumAttractive(Sector& agentSector, float& attractX, float& attractY);
+	
+	/** Sums all repulsive forces for the agent. */
+	void sumRepulsive(Sector& agentSector, float& repulseX, float& repulseY);
+	
+	/** Finds the position of the target we are working toward. */
+	bool addTargetForces(Sector& startSector, float& attractX, float& attractY);
+	
+	/** Updates knowledge with new scene information. */
+	void update();
 
 
 protected:
@@ -55,7 +67,10 @@ protected:
 	player_t*						_inGameAgent;
 	std::shared_ptr<AgentMap>		_agentMap;
 	
+	std::shared_ptr<Portal>			_nextMove;
+	int								_moveAttempts;
 	int								_nodeCount;
+	int								_priorX, _priorY;
 };
 
 #endif  // End of __Agent__
