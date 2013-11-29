@@ -50,6 +50,8 @@ void AgentMap::_buildMap()
 			sec.addLine(&lines[i]);
 			_sectors[front_sec_t] = sec;
 		}
+		else
+			_sectors[front_sec_t].addLine(&lines[i]);
 
 		if (_sectors.find(back_sec_t) == _sectors.end()) {
 			if (back_sec_t) {
@@ -58,24 +60,8 @@ void AgentMap::_buildMap()
 				_sectors[back_sec_t] = sec;
 			}
 		}
-		
-		
-//		float pos_x2 = ((lines[i].v1->x) + (lines[i].v2->x)) / 2.0;
-//		float pos_y2 = ((lines[i].v1->y) + (lines[i].v2->y)) / 2.0;
-//		mobj_t thing2; // this can be invalid and is handled properly
-//		thing2.radius = 528576;
-//		thing2.height = 528576;
-//		thing2.flags = thing2.flags & 0x0111;
-//		mapthing_t m_thing2;
-//		m_thing2.angle = 90;
-//		m_thing2.type = MT_UNDEAD;
-//		m_thing2.options = 7;
-//		m_thing2.x = (int) pos_x2 >> FRACBITS;
-//		m_thing2.y = (int) pos_y2 >> FRACBITS;
-//		if (!P_CheckPosition(&thing2, pos_x2, pos_y2))
-//		{
-//			P_SpawnMapThing(&m_thing2);
-//		}
+		else
+			_sectors[back_sec_t].addLine(&lines[i]);
 		
 		// Look for endgame
 		if (lines[i].special == 11)
@@ -105,6 +91,30 @@ void AgentMap::_buildMap()
 			}
 		}
 	}
+	
+//	for (std::map<sector_t*, Sector>::iterator it = _sectors.begin(); it!=_sectors.end(); ++it) {
+//		std::vector<line_t*> lines = (*it).second.lines();
+//		
+//		for (unsigned int i=0; i<lines.size(); ++i) {
+//			float pos_x2 = ((lines[i]->v1->x) + (lines[i]->v2->x)) / 2.0;
+//			float pos_y2 = ((lines[i]->v1->y) + (lines[i]->v2->y)) / 2.0;
+//			mobj_t thing2; // this can be invalid and is handled properly
+//			thing2.radius = 528576;
+//			thing2.height = 528576;
+//			thing2.flags = thing2.flags & 0x0111;
+//			mapthing_t m_thing2;
+//			m_thing2.angle = 90;
+//			m_thing2.type = MT_UNDEAD;
+//			m_thing2.options = 7;
+//			m_thing2.x = (int) pos_x2 >> FRACBITS;
+//			m_thing2.y = (int) pos_y2 >> FRACBITS;
+//			if (!P_CheckPosition(&thing2, pos_x2, pos_y2))
+//			{
+//				P_SpawnMapThing(&m_thing2);
+//			}
+//		}
+//	}
+
 }
 
 void AgentMap::clearSearch()

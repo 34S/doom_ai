@@ -50,6 +50,7 @@ protected:
 	/** iVars. */
 	std::map<sector_t*, Sector>		_sectors;
 	sector_t*						_endLevelSector;
+	Sector*							_nextSector;
 };
 
 #endif  // End of __AGENT_MAP_H__

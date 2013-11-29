@@ -50,13 +50,13 @@ public:
 	void setupAgent();
 	
 	/** Sums all attractive forces for the agent. */
-	void sumAttractive(Sector& agentSector, float& attractX, float& attractY);
+	void sumAttractive(float& attractX, float& attractY);
 	
 	/** Sums all repulsive forces for the agent. */
-	void sumRepulsive(Sector& agentSector, float& repulseX, float& repulseY);
+	void sumRepulsive(float& repulseX, float& repulseY);
 	
 	/** Finds the position of the target we are working toward. */
-	bool addTargetForces(Sector& startSector, float& attractX, float& attractY);
+	bool addTargetForces(float& attractX, float& attractY);
 	
 	/** Updates knowledge with new scene information. */
 	void update();
@@ -64,13 +64,15 @@ public:
 
 protected:
 	
-	player_t*						_inGameAgent;
 	std::shared_ptr<AgentMap>		_agentMap;
-	
+	Sector*							_currentSector;
+	bool							_findNewRoute;
+	player_t*						_inGameAgent;
 	std::shared_ptr<Portal>			_nextMove;
 	int								_moveAttempts;
 	int								_nodeCount;
 	int								_priorX, _priorY;
+	bool							_stuck;
 };
 
 #endif  // End of __Agent__
