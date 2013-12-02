@@ -55,9 +55,9 @@ public:
 	/** Sums all repulsive forces for the agent. */
 	void sumRepulsive(float& repulseX, float& repulseY);
 	
-	/** Finds the position of the target we are working toward. */
-	bool addTargetForces(float& attractX, float& attractY);
-	
+	/** Uses any specials contains in the current sector. */
+	void useSpecials();
+
 	/** Updates knowledge with new scene information. */
 	void update();
 
@@ -65,16 +65,14 @@ public:
 protected:
 	
 	std::shared_ptr<AgentMap>		_agentMap;
+	unsigned int					_agentProximity;
 	Sector*							_currentSector;
 	bool							_levelComplete;
 	bool							_findNewRoute;
 	player_t*						_inGameAgent;
 	std::shared_ptr<Portal>			_nextMove;
-	int								_moveAttempts;
 	int								_nodeCount;
 	int								_priorX, _priorY;
-	unsigned int					_usingSpecial;
-	bool							_stuck;
 };
 
 #endif  // End of __Agent__

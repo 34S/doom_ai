@@ -33,12 +33,11 @@ Agent::Agent()
 
 Agent::Agent(player_t* inGameAgent, node_t* bspNodes)
 {
+	_agentProximity = 300;
 	_inGameAgent = inGameAgent;
-	_stuck = false;
 	_findNewRoute = true;
 	_levelComplete = false;
 	_priorX = 0; _priorY = 0;
-	_usingSpecial = 0;
 	setupAgent();
 }
 
@@ -54,17 +53,9 @@ void Agent::setupAgent()
 
 void Agent::update()
 {
-	//	std::cout << "Updating the path for the agent" << std::endl;
-	
-	//	static int count = 0;
-//	if (count > 1){
-//		return;
-//	}
-//	++count;
-//	count = 0;
-	
-	// We already made it to the end.. don't do anything
+	// We're at the end of the level, activate the end-game
 	if (_levelComplete) {
+		useSpecials();
 		return;
 	}
 	
@@ -79,7 +70,7 @@ void Agent::update()
 	}
 	
 	// If we need to re-route, perform a new search. This is only done once at the very
-	// beginning currently.
+	// beginning currently, but can be used later if we encounter something we need to avoid.
 	if (_findNewRoute) {
 		
 		// First find the end game sector from the current sector
@@ -110,72 +101,24 @@ void Agent::update()
 	if (_currentSector->doomSector() == _agentMap->endLevelSector()) {
 		std::cout << "We're done with the level.. Completing" << std::endl;
 		_levelComplete = true;
+		
 		return;
 	}
 	
-	// If we're close to the target location, move to the next target location
-	int agent_proximity = 300;
+	// If we're close to the current target location, change target to next location
 	int target_distance = (abs(_nextMove->line->v1->x - _inGameAgent->mo->x) +
 									abs(_nextMove->line->v1->y - _inGameAgent->mo->y)) >> FRACBITS;
-	if (target_distance < agent_proximity) {
-		if (!_currentSector->searchChild()) {
-			return;
+	if (target_distance < _agentProximity) {
+		if (_currentSector->searchChild()) {
+			_nextMove = _currentSector->searchChild();
 		}
-		_nextMove = _currentSector->searchChild();
 	}
 	
+	// Calculates the necessary movement given all force fields surrounding our agent
 	chooseMove();
 	
 	// If there are any special lines in front of us, use them
-	unsigned int special_use_time = 300;
-	std::vector<line_t*> lines = _currentSector->lines();
-	if (_currentSector->searchChild()) {
-		lines.insert(lines.end(), _currentSector->searchChild()->sector->lines().begin(),
-					 _currentSector->searchChild()->sector->lines().end());
-	}
-	bool special_found = false;
-	for (unsigned int i=0; i<lines.size(); ++i) {
-		int line_distance = (abs(lines[i]->v1->x - _inGameAgent->mo->x) +
-							   abs(lines[i]->v1->y - _inGameAgent->mo->y)) >> FRACBITS;
-		switch (lines[i]->special)
-		{
-//			case 11:
-				
-				
-			case 1:		// Vertical Door
-			case 26:		// Blue Door/Locked
-			case 27:		// Yellow Door /Locked
-			case 28:		// Red Door /Locked
-				
-			case 31:		// Manual door open
-			case 32:		// Blue locked door open
-			case 33:		// Red locked door open
-			case 34:		// Yellow locked door open
-				
-			case 117:		// Blazing door raise
-			case 118:		// Blazing door open
-			{
-				if (line_distance > agent_proximity) {
-					continue;
-				}
-				sector_t* sec = sides[lines[i]->sidenum[0^1]].sector;
-				vldoor_t* door = (vldoor_t*)sec->specialdata;
-				if (sec->specialdata) {
-					if (door->direction == 1) {
-						return;
-					}
-				}
-				EV_VerticalDoor (lines[i], _inGameAgent->mo);
-				break;
-			}
-			case 0:
-				break;
-			default:
-				break;
-		}
-	}
-	if (!special_found)
-		_usingSpecial = 0;
+	useSpecials();
 }
 
 #ifdef __APPLE__
@@ -206,7 +149,6 @@ void Agent::chooseMove()
 	_agentMap->clearSearch();
 	_priorX = _inGameAgent->mo->momx;
 	_priorY = _inGameAgent->mo->momy;
-	_stuck = false;
 }
 
 void Agent::sumAttractive(float& attractX, float& attractY)
@@ -228,20 +170,13 @@ void Agent::sumAttractive(float& attractX, float& attractY)
 	attractY += ((target_y - agent_y) / mag) * target_force;
 }
 
-bool Agent::addTargetForces(float& attractX, float& attractY)
-{
-
-	
-	return true;
-}
-
 void Agent::sumRepulsive(float& repulseX, float& repulseY)
 {
 	float agent_x = (_inGameAgent->mo->x) >> FRACBITS;
 	float agent_y = (_inGameAgent->mo->y) >> FRACBITS;
 	
 	// Apply a force for each wall
-	float line_force = 5;
+	float line_force = 20;
 	std::vector<line_t*> lines = _currentSector->lines();
 	float line_repulse_x, line_repulse_y;
 	
@@ -265,14 +200,12 @@ void Agent::sumRepulsive(float& repulseX, float& repulseY)
 		line_repulse_x = (x - agent_x) / mag;
 		line_repulse_y = (y - agent_y) / mag;
 		
-//		if (lines[i]->special
-		
 		repulseX -= line_force * line_repulse_x;
 		repulseY -= line_force * line_repulse_x;
 	}
 	
 	// Apply a force for each "thing"
-	float thing_force = 5;
+	float thing_force = 15;
 	mobj_t* sec_thing = _currentSector->doomSector()->thinglist;
 	float thing_repulse_x, thing_repulse_y;
 	while (sec_thing) {
@@ -289,6 +222,56 @@ void Agent::sumRepulsive(float& repulseX, float& repulseY)
 			repulseY -= thing_force * thing_repulse_y;
 		}
 		sec_thing = sec_thing->snext;
+	}
+}
+
+void Agent::useSpecials()
+{
+	std::vector<line_t*> lines = _currentSector->lines();
+	if (_currentSector->searchChild()) {
+		lines.insert(lines.end(), _currentSector->searchChild()->sector->lines().begin(),
+					 _currentSector->searchChild()->sector->lines().end());
+	}
+	for (unsigned int i=0; i<lines.size(); ++i) {
+		int line_distance = (abs(lines[i]->v1->x - _inGameAgent->mo->x) +
+							 abs(lines[i]->v1->y - _inGameAgent->mo->y)) >> FRACBITS;
+		switch (lines[i]->special)
+		{
+			case 11:
+			{
+				P_UseSpecialLine(_inGameAgent->mo, lines[i],0);
+				return;
+			}
+				
+			case 1:		// Vertical Door
+			case 26:		// Blue Door/Locked
+			case 27:		// Yellow Door /Locked
+			case 28:		// Red Door /Locked
+				
+			case 31:		// Manual door open
+			case 32:		// Blue locked door open
+			case 33:		// Red locked door open
+			case 34:		// Yellow locked door open
+				
+			case 117:		// Blazing door raise
+			case 118:		// Blazing door open
+			{
+				if (line_distance > _agentProximity) {
+					continue;
+				}
+				sector_t* sec = sides[lines[i]->sidenum[0^1]].sector;
+				vldoor_t* door = (vldoor_t*)sec->specialdata;
+				if (sec->specialdata) {
+					if (door->direction == 1) {
+						return;
+					}
+				}
+				EV_VerticalDoor (lines[i], _inGameAgent->mo);
+				break;
+			}
+			default:
+				break;
+		}
 	}
 }
 
