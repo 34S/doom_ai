@@ -150,9 +150,9 @@ void P_Ticker (void)
     for (i=0 ; i<MAXPLAYERS ; i++)
 	if (playeringame[i])
 	{
-	    P_PlayerThink (&players[i]);
 		if (i==0)
 			updateAgent();
+	    P_PlayerThink (&players[i]);
 	}
 			
 			

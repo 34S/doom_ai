@@ -12,15 +12,14 @@
 
 // DOOM headers
 extern "C" {
-#include "p_local.h"
+	#include "d_event.h"
+	#include "p_local.h"
 }
-
 
 // Local headers
 #include "Agent.h"
 #include "Sector.h"
 
-extern "C" void P_SpawnMapThing (mapthing_t* mthing);
 
 #ifdef __APPLE__
 #pragma mark -
@@ -37,6 +36,9 @@ Agent::Agent(player_t* inGameAgent, node_t* bspNodes)
 	_inGameAgent = inGameAgent;
 	_stuck = false;
 	_findNewRoute = true;
+	_levelComplete = false;
+	_priorX = 0; _priorY = 0;
+	_usingSpecial = 0;
 	setupAgent();
 }
 
@@ -54,12 +56,17 @@ void Agent::update()
 {
 	//	std::cout << "Updating the path for the agent" << std::endl;
 	
-//	static int count = 0;
+	//	static int count = 0;
 //	if (count > 1){
 //		return;
 //	}
 //	++count;
 //	count = 0;
+	
+	// We already made it to the end.. don't do anything
+	if (_levelComplete) {
+		return;
+	}
 	
 	// Figure out what sector the agent is located in
 	Sector agent_sector;
@@ -71,7 +78,8 @@ void Agent::update()
 		}
 	}
 	
-	// If we need to re-route, perform a new search
+	// If we need to re-route, perform a new search. This is only done once at the very
+	// beginning currently.
 	if (_findNewRoute) {
 		
 		// First find the end game sector from the current sector
@@ -80,10 +88,11 @@ void Agent::update()
 		endSector = depthFirstSearch(_currentSector, NULL);
 		std::cout << "Nodes searched: " << _nodeCount << std::endl;
 		if (endSector == NULL) {
+			std::cout << "No end sector found.. Returning" << std::endl;
 			return;
 		}
 		
-		// Create the search tree
+		// Create the search tree so that we can search parent->child or child->parent
 		std::shared_ptr<Portal> parent = endSector->searchParent();
 		std::shared_ptr<Portal> prior = endSector->searchParent();
 		while (parent != NULL) {
@@ -97,14 +106,76 @@ void Agent::update()
 		_findNewRoute = false;
 	}
 	
-	// If we're close to the target, aim for the next target
+	// If we've reached the end sector of the level, return and do nothing
+	if (_currentSector->doomSector() == _agentMap->endLevelSector()) {
+		std::cout << "We're done with the level.. Completing" << std::endl;
+		_levelComplete = true;
+		return;
+	}
+	
+	// If we're close to the target location, move to the next target location
+	int agent_proximity = 300;
 	int target_distance = (abs(_nextMove->line->v1->x - _inGameAgent->mo->x) +
 									abs(_nextMove->line->v1->y - _inGameAgent->mo->y)) >> FRACBITS;
-	if (target_distance < 200) {
+	if (target_distance < agent_proximity) {
+		if (!_currentSector->searchChild()) {
+			return;
+		}
 		_nextMove = _currentSector->searchChild();
 	}
 	
 	chooseMove();
+	
+	// If there are any special lines in front of us, use them
+	unsigned int special_use_time = 300;
+	std::vector<line_t*> lines = _currentSector->lines();
+	if (_currentSector->searchChild()) {
+		lines.insert(lines.end(), _currentSector->searchChild()->sector->lines().begin(),
+					 _currentSector->searchChild()->sector->lines().end());
+	}
+	bool special_found = false;
+	for (unsigned int i=0; i<lines.size(); ++i) {
+		int line_distance = (abs(lines[i]->v1->x - _inGameAgent->mo->x) +
+							   abs(lines[i]->v1->y - _inGameAgent->mo->y)) >> FRACBITS;
+		switch (lines[i]->special)
+		{
+//			case 11:
+				
+				
+			case 1:		// Vertical Door
+			case 26:		// Blue Door/Locked
+			case 27:		// Yellow Door /Locked
+			case 28:		// Red Door /Locked
+				
+			case 31:		// Manual door open
+			case 32:		// Blue locked door open
+			case 33:		// Red locked door open
+			case 34:		// Yellow locked door open
+				
+			case 117:		// Blazing door raise
+			case 118:		// Blazing door open
+			{
+				if (line_distance > agent_proximity) {
+					continue;
+				}
+				sector_t* sec = sides[lines[i]->sidenum[0^1]].sector;
+				vldoor_t* door = (vldoor_t*)sec->specialdata;
+				if (sec->specialdata) {
+					if (door->direction == 1) {
+						return;
+					}
+				}
+				EV_VerticalDoor (lines[i], _inGameAgent->mo);
+				break;
+			}
+			case 0:
+				break;
+			default:
+				break;
+		}
+	}
+	if (!special_found)
+		_usingSpecial = 0;
 }
 
 #ifdef __APPLE__
@@ -113,7 +184,7 @@ void Agent::update()
 #endif
 
 void Agent::chooseMove()
-{	
+{
 	// Move the agent
 	float attract_x=0; float attract_y=0;
 	sumAttractive(attract_x, attract_y);
@@ -121,13 +192,15 @@ void Agent::chooseMove()
 	sumRepulsive(repulse_x, repulse_y);
 	
 	// Implement low-pass filter
-	float constant = 0.2;
+	float constant = 0.1;
 	float mom_x = ((attract_x + repulse_x) * pow(2, FRACBITS)) * constant + _priorX * (1-constant);
 	float mom_y = ((attract_y + repulse_y) * pow(2, FRACBITS)) * constant + _priorY * (1-constant);
 	
 	// Update the agents momentum
-	_inGameAgent->mo->momx = mom_x;
-	_inGameAgent->mo->momy = mom_y;
+	int speed = 2 << FRACBITS;
+	float mag = sqrtf(mom_x*mom_x + mom_y*mom_y);
+	_inGameAgent->mo->momx = (mom_x / mag) * speed;
+	_inGameAgent->mo->momy = (mom_y / mag) * speed;
 	
 	// Get setup for the next tic
 	_agentMap->clearSearch();
@@ -139,29 +212,25 @@ void Agent::chooseMove()
 void Agent::sumAttractive(float& attractX, float& attractY)
 {
 	// Attraction to all target portals to the end of the game
-	float target_weight = 500;
-	bool found_target = addTargetForces(attractX, attractY);
-	if (!found_target) {
-		attractX = 0;
-		attractY = 0;
-	}
-	attractX *= target_weight;
-	attractY *= target_weight;
-}
+	float target_force = 600;
 
-bool Agent::addTargetForces(float& attractX, float& attractY)
-{
+	// Get the current agent position
 	float agent_x = (_inGameAgent->mo->x) >> FRACBITS;
 	float agent_y = (_inGameAgent->mo->y) >> FRACBITS;
 	
-	// Attract the agent to the
+	// Attract the agent to the next target
 	float temp_x = (_nextMove->line->v1->x + _nextMove->line->v2->x) / 2.0;
 	int target_x = (int) temp_x >> FRACBITS;
 	float temp_y = (_nextMove->line->v1->y + _nextMove->line->v2->y) / 2.0;
 	int target_y = (int) temp_y >> FRACBITS;
 	float mag = distanceMagnitude(agent_x, agent_y, target_x, target_y);
-	attractX += (target_x - agent_x) / mag;
-	attractY += (target_y - agent_y) / mag;
+	attractX += ((target_x - agent_x) / mag) * target_force;
+	attractY += ((target_y - agent_y) / mag) * target_force;
+}
+
+bool Agent::addTargetForces(float& attractX, float& attractY)
+{
+
 	
 	return true;
 }
@@ -172,7 +241,7 @@ void Agent::sumRepulsive(float& repulseX, float& repulseY)
 	float agent_y = (_inGameAgent->mo->y) >> FRACBITS;
 	
 	// Apply a force for each wall
-	float line_force = 1;
+	float line_force = 5;
 	std::vector<line_t*> lines = _currentSector->lines();
 	float line_repulse_x, line_repulse_y;
 	
@@ -196,12 +265,14 @@ void Agent::sumRepulsive(float& repulseX, float& repulseY)
 		line_repulse_x = (x - agent_x) / mag;
 		line_repulse_y = (y - agent_y) / mag;
 		
+//		if (lines[i]->special
+		
 		repulseX -= line_force * line_repulse_x;
 		repulseY -= line_force * line_repulse_x;
 	}
 	
 	// Apply a force for each "thing"
-	float thing_force = 1;
+	float thing_force = 5;
 	mobj_t* sec_thing = _currentSector->doomSector()->thinglist;
 	float thing_repulse_x, thing_repulse_y;
 	while (sec_thing) {

@@ -66,12 +66,14 @@ protected:
 	
 	std::shared_ptr<AgentMap>		_agentMap;
 	Sector*							_currentSector;
+	bool							_levelComplete;
 	bool							_findNewRoute;
 	player_t*						_inGameAgent;
 	std::shared_ptr<Portal>			_nextMove;
 	int								_moveAttempts;
 	int								_nodeCount;
 	int								_priorX, _priorY;
+	unsigned int					_usingSpecial;
 	bool							_stuck;
 };
 
