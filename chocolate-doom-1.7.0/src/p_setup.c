@@ -48,8 +48,11 @@
 
 #include "doomstat.h"
 
+#include "DoomAILink.h"
 
-void	P_SpawnMapThing (mapthing_t*	mthing);
+void createAgent(player_t* player, node_t* nodes);
+void updateAgent();
+void P_SpawnMapThing (mapthing_t*	mthing);
 
 
 //
@@ -844,7 +847,10 @@ P_SetupLevel
 	R_PrecacheLevel ();
 
     //printf ("free memory: 0x%x\n", Z_FreeMemory());
-
+	
+	// Create our link into the run loop for c++
+	createAgent(&players[0], nodes);
+	updateAgent();
 }
 
 

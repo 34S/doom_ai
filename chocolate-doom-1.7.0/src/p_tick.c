@@ -30,9 +30,11 @@
 #include "p_local.h"
 
 #include "doomstat.h"
+#include "DoomAILink.h"
 
 
 int	leveltime;
+void updateAgent();
 
 //
 // THINKERS
@@ -41,7 +43,6 @@ int	leveltime;
 // The actual structures will vary in size,
 // but the first element must be thinker_t.
 //
-
 
 
 // Both the head and tail of the thinker list.
@@ -148,7 +149,12 @@ void P_Ticker (void)
 		
     for (i=0 ; i<MAXPLAYERS ; i++)
 	if (playeringame[i])
+	{
+		if (i==0)
+			updateAgent();
 	    P_PlayerThink (&players[i]);
+	}
+			
 			
     P_RunThinkers ();
     P_UpdateSpecials ();
