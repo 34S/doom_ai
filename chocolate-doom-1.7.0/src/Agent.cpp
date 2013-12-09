@@ -19,6 +19,7 @@ extern "C" {
 // Local headers
 #include "Agent.h"
 #include "Sector.h"
+#include "ObjType.h"
 
 
 #ifdef __APPLE__
@@ -116,6 +117,8 @@ void Agent::update()
 	
 	// Calculates the necessary movement given all force fields surrounding our agent
 	chooseMove();
+    
+    chooseAim();
 	
 	// If there are any special lines in front of us, use them
 	useSpecials();
@@ -149,6 +152,47 @@ void Agent::chooseMove()
 	_agentMap->clearSearch();
 	_priorX = _inGameAgent->mo->momx;
 	_priorY = _inGameAgent->mo->momy;
+}
+
+void Agent::chooseAim() {
+    int n_things = bmapheight * bmapwidth;
+    mobj_t* nearest_thing = NULL;
+    float min_distance = -1.0;
+    for (int i = 0; i < n_things; ++i) {
+        mobj_t* sec_thing = blocklinks[i];
+        if (sec_thing != NULL && isMonster(sec_thing->type) && sec_thing->health > 0) {
+            float thing_x = (sec_thing->x) >> FRACBITS;
+            float thing_y = (sec_thing->y) >> FRACBITS;
+            float dist = pow(thing_x, 2) + pow(thing_y, 2);
+            if (min_distance < 0 || dist < min_distance) {
+                nearest_thing = sec_thing;
+                min_distance = dist;
+            }
+        }
+    }
+    
+    if (nearest_thing) {
+        float thing_x = (nearest_thing->x) >> FRACBITS;
+        float thing_y = (nearest_thing->y) >> FRACBITS;
+        float agent_x = (_inGameAgent->mo->x) >> FRACBITS;
+        float agent_y = (_inGameAgent->mo->y) >> FRACBITS;
+        float x = thing_x - agent_x;
+        float y = thing_y - agent_y;
+        float angle = atanf(y / x) * 180.0f / M_PI;
+        if (x < 0) {
+            angle += 180.0f;
+        } else if (y < 0) {
+            angle += 360.0f;
+        }
+        int look = (int)(angle * 65536 / 360.0f) << FRACBITS;
+        _inGameAgent->mo->angle = look;
+
+        int slope = P_AimLineAttack(_inGameAgent->mo, _inGameAgent->mo->angle, MISSILERANGE);
+        P_LineAttack(_inGameAgent->mo, _inGameAgent->mo->angle, MISSILERANGE, slope, 0);
+        if (linetarget == nearest_thing) {
+            _inGameAgent->cmd.buttons |= BT_ATTACK;
+        }
+    }
 }
 
 void Agent::sumAttractive(float& attractX, float& attractY)
@@ -221,6 +265,7 @@ void Agent::sumRepulsive(float& repulseX, float& repulseY)
 			repulseX -= thing_force * thing_repulse_x;
 			repulseY -= thing_force * thing_repulse_y;
 		}
+        
 		sec_thing = sec_thing->snext;
 	}
 }

@@ -39,6 +39,9 @@ public:
 	
 	/** Selects the next move for the agent. */
 	void chooseMove();
+    
+    /** Selects where the agent should aim. */
+    void chooseAim();
 	
 	/** Search methods returning next position to move toward. */
 	Sector* depthFirstSearch(Sector* leaf, std::shared_ptr<Portal> parent);

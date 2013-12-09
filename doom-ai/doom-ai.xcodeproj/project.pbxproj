@@ -127,6 +127,7 @@
 		2D3A342C183AB22A007B924B /* Sector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2D3A3429183AB22A007B924B /* Sector.cpp */; };
 		2D3A3433183AB7CB007B924B /* DoomAILink.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2D3A3431183AB7CA007B924B /* DoomAILink.cpp */; };
 		2DCF7D1F183A7775003469ED /* PathPlanner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DCF7D1D183A7775003469ED /* PathPlanner.cpp */; };
+		3B0D783018552447009816AB /* ObjType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3B0D782F18552447009816AB /* ObjType.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -347,9 +348,9 @@
 		2D0898B818380CC8002C708C /* libtextscreen.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libtextscreen.a; path = "../chocolate-doom-1.7.0/textscreen/libtextscreen.a"; sourceTree = "<group>"; };
 		2D0898BA18380D48002C708C /* libc_wince.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libc_wince.a; path = "../chocolate-doom-1.7.0/wince/libc_wince.a"; sourceTree = "<group>"; };
 		2D0898BC18380DB2002C708C /* dummy.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = dummy.c; path = "../../chocolate-doom-1.7.0/wince/dummy.c"; sourceTree = "<group>"; };
-		2D0898C8183811D2002C708C /* libSDL_mixer.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL_mixer.a; path = ../../../../../../../usr/local/Cellar/sdl_mixer/1.2.12/lib/libSDL_mixer.a; sourceTree = "<group>"; };
-		2D0898CA183811F7002C708C /* libSDL.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL.a; path = ../../../../../../../usr/local/Cellar/sdl/1.2.15/lib/libSDL.a; sourceTree = "<group>"; };
-		2D0898CC1838120A002C708C /* libSDL_net.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL_net.a; path = ../../../../../../../usr/local/Cellar/sdl_net/1.2.8/lib/libSDL_net.a; sourceTree = "<group>"; };
+		2D0898C8183811D2002C708C /* libSDL_mixer.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL_mixer.a; path = /usr/local/Cellar/sdl_mixer/1.2.12/lib/libSDL_mixer.a; sourceTree = "<absolute>"; };
+		2D0898CA183811F7002C708C /* libSDL.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL.a; path = /usr/local/Cellar/sdl/1.2.15/lib/libSDL.a; sourceTree = "<absolute>"; };
+		2D0898CC1838120A002C708C /* libSDL_net.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL_net.a; path = /usr/local/Cellar/sdl_net/1.2.8/lib/libSDL_net.a; sourceTree = "<absolute>"; };
 		2D0898CE1838123E002C708C /* SDLMain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDLMain.h; path = /usr/local/Cellar/sdl/1.2.15/libexec/SDLMain.h; sourceTree = "<absolute>"; };
 		2D0898CF1838123E002C708C /* SDLMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SDLMain.m; path = /usr/local/Cellar/sdl/1.2.15/libexec/SDLMain.m; sourceTree = "<absolute>"; };
 		2D3A3424183AB1FE007B924B /* Agent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Agent.cpp; path = "../../chocolate-doom-1.7.0/src/Agent.cpp"; sourceTree = "<group>"; };
@@ -362,6 +363,8 @@
 		2D3A3432183AB7CA007B924B /* DoomAILink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DoomAILink.h; path = "../../chocolate-doom-1.7.0/src/DoomAILink.h"; sourceTree = "<group>"; };
 		2DCF7D1D183A7775003469ED /* PathPlanner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PathPlanner.cpp; path = "../../chocolate-doom-1.7.0/src/AI/PathPlanner.cpp"; sourceTree = "<group>"; };
 		2DCF7D1E183A7775003469ED /* PathPlanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PathPlanner.h; path = "../../chocolate-doom-1.7.0/src/AI/PathPlanner.h"; sourceTree = "<group>"; };
+		3B0D782E185523E9009816AB /* ObjType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ObjType.h; sourceTree = "<group>"; };
+		3B0D782F18552447009816AB /* ObjType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjType.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -388,17 +391,7 @@
 		2D08975718380553002C708C = {
 			isa = PBXGroup;
 			children = (
-				2D0898CC1838120A002C708C /* libSDL_net.a */,
-				2D0898CA183811F7002C708C /* libSDL.a */,
-				2D0898C8183811D2002C708C /* libSDL_mixer.a */,
-				2D0898BA18380D48002C708C /* libc_wince.a */,
-				2D0898B818380CC8002C708C /* libtextscreen.a */,
-				2D0898B618380CBD002C708C /* libpcsound.a */,
-				2D0898B418380CA7002C708C /* libopl.a */,
-				2D0898AC18380C4E002C708C /* AppKit.framework */,
-				2D0898AA18380C20002C708C /* Foundation.framework */,
-				2D0898A718380BC0002C708C /* Carbon.framework */,
-				2D08989718380A84002C708C /* CoreFoundation.framework */,
+				3B0D782D18551CA9009816AB /* Frameworks */,
 				2D08976218380553002C708C /* doom-ai */,
 				2D08976118380553002C708C /* Products */,
 			);
@@ -638,8 +631,28 @@
 				2DCF7D1E183A7775003469ED /* PathPlanner.h */,
 				2D3A3431183AB7CA007B924B /* DoomAILink.cpp */,
 				2D3A3432183AB7CA007B924B /* DoomAILink.h */,
+				3B0D782E185523E9009816AB /* ObjType.h */,
+				3B0D782F18552447009816AB /* ObjType.cpp */,
 			);
 			name = Pathfinder;
+			sourceTree = "<group>";
+		};
+		3B0D782D18551CA9009816AB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2D0898CC1838120A002C708C /* libSDL_net.a */,
+				2D0898CA183811F7002C708C /* libSDL.a */,
+				2D0898C8183811D2002C708C /* libSDL_mixer.a */,
+				2D0898BA18380D48002C708C /* libc_wince.a */,
+				2D0898B818380CC8002C708C /* libtextscreen.a */,
+				2D0898B618380CBD002C708C /* libpcsound.a */,
+				2D0898B418380CA7002C708C /* libopl.a */,
+				2D0898AC18380C4E002C708C /* AppKit.framework */,
+				2D0898AA18380C20002C708C /* Foundation.framework */,
+				2D0898A718380BC0002C708C /* Carbon.framework */,
+				2D08989718380A84002C708C /* CoreFoundation.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -784,6 +797,7 @@
 				2D08988F18380647002C708C /* w_file_stdc.c in Sources */,
 				2D0898D01838123E002C708C /* SDLMain.m in Sources */,
 				2D089811183805DF002C708C /* net_common.c in Sources */,
+				3B0D783018552447009816AB /* ObjType.cpp in Sources */,
 				2D08985D18380623002C708C /* p_sight.c in Sources */,
 				2D08986A18380623002C708C /* r_things.c in Sources */,
 				2D089813183805DF002C708C /* net_gui.c in Sources */,
