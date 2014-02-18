@@ -32,6 +32,9 @@ xcscheme
 
 # Xcode
 build/
+*/UserInterfaceState.xcuserstate
+*/doom-ai.xcscheme
+*.pbxproj
 *.pbxuser
 !default.pbxuser
 *.mode1v3
@@ -94,7 +97,3 @@ guitest
 chocolate-doom
 chocolate-server
 chocolate-setup
-
-/doom-ai/doom-ai.xcodeproj/project.xcworkspace/xcuserdata/trevorr.xcuserdatad/UserInterfaceState.xcuserstate
-
-/doom-ai/doom-ai.xcodeproj/xcuserdata/trevorr.xcuserdatad/xcschemes/doom-ai.xcscheme
